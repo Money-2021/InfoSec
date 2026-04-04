@@ -53,3 +53,6 @@
     
 
  }
+
+Note
+1.  fp.GetCounter(); counter is a security feature where the Fido provider increments a count after every operation. The server checks this number to detect if a fido provider has been cloned, as a cloned device would show a backward or significantly different count compared to the device original.
