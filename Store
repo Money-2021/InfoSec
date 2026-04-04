@@ -7,15 +7,13 @@
      string sin = Environment.GetEnvironmentVariable("DeviceTestA");
      string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
      Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
-
-    
+     // Obtain VaultMe JwToken authorisation
      string infoSecToken = InfoSecSupport.VaultMe(userTokenPath);
-    
-
      byte[] cnt = Encoding.UTF8.GetBytes("Test");
      string filename = "Test.txt";
       string jwk = SqlServer.Providers.JwtProvider.ExtractJwk(infoSecToken);
 
+     // Create New InfoSec Object
      InfoSecToken tkn = new InfoSecToken();
      tkn.Jti = Fido.EllipticCurves.CsPrng.RandomGuid();
      tkn.ObjectHash = new SHAKE256(64 * 8).ComputeHash(cnt);
@@ -25,7 +23,6 @@
      tkn.Counter = fp.GetCounter();
      tkn.LinkInfo = fp.Protect(cnt, infoSecToken);   // Protect InfoSec 
      string pData = tkn.Encode(fp);
-
 
      // Post InfoSecToken
      StringContent content = new StringContent(pData);
