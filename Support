@@ -1,0 +1,49 @@
+public  class InfoSecSupport
+{
+    public static string GetRelativeUrl()
+    {
+        return "api/Register";
+    }
+    public static string VaultMe(string userTokenPath)
+    {
+        Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+        // Extract endpoint from Device Token
+        Uri _baseUri = new Uri(fp.Audience());
+
+        // Obtain Function JwToken
+        HttpClient _httpClient = new HttpClient();
+        // Build funtion endpoint Uri
+        string _relativeUrl = "api/VaultMe";
+        Uri _uri = new Uri(_baseUri, _relativeUrl);
+        _httpClient.BaseAddress = _baseUri;
+        // Add Device Jwtoken
+        string token = fp.GetJwToken();
+        _httpClient.DefaultRequestHeaders.Add("x-token", token);
+        // Add device signature
+        string shash = fp.GetJwToken();
+        string ssign = fp.Sign(shash);
+        _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
+        // Get response
+        HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
+        if (response.IsSuccessStatusCode)
+        {
+
+            Stream receiveStream = response.Content.ReadAsStream();
+            StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
+            string jwToken = reader.ReadToEnd();
+            return jwToken;
+        }
+        else
+        {
+            // fail
+            string error = response.Content.ReadAsStringAsync().Result;
+            if (string.IsNullOrEmpty(error))
+            {
+                error = response.ReasonPhrase;
+            }
+            throw new Exception(error);
+        }
+
+    }
+  
+}
