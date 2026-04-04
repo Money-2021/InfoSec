@@ -8,3 +8,8 @@ Defence Information Security (INFOSEC) involves protecting sensitive defence dat
 InfoSec is designed to assist defence organisations in rapidly meeting complex requirements for sensitive information handling and sharing, including up to TOP SECRET compartmented information, with codewords. Information custodians can set up secure workspaces and ITAR compartments to share and collaborate on export controlled information, knowing only authorized users will have access to the information with ITS secured and hence ITAR compliant dissemination controls. Défense Industry organizations can consume the SaaS cloud based platform as they need, without the substantial costs of implementing new on-premises secured ICT infrastructure.
 
 Secure systems must always be simple to have any chance of being secure, this InfoSec solution has two operations Store and Retrieve...
+
+Note
+1. Medley is the codename for the proprietry trade secret based ITS-KMS.
+Medley is keep as a tarde secret not for security reasons (Kerchoffs Principle) rather to maintain a strategic advantage, protect operational security, and ensure the effectiveness of operational deployemnts as InfoSec as a Service.
+These trade secret algorithms, often form part of "algorithmic warfare," are used to enhance operational security, in ways that adversaries cannot easily predict or counter.
