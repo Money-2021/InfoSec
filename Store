@@ -11,7 +11,7 @@
      string infoSecToken = InfoSecSupport.VaultMe(userTokenPath);
      byte[] cnt = Encoding.UTF8.GetBytes("Test");
      string filename = "Test.txt";
-      string jwk = SqlServer.Providers.JwtProvider.ExtractJwk(infoSecToken);
+     string jwk = JwtProvider.ExtractJwk(infoSecToken);
 
      // Create New InfoSec Object
      InfoSecToken tkn = new InfoSecToken();
