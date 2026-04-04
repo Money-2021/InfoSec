@@ -22,7 +22,7 @@
      tkn.FileName = filename;
      tkn.JwToken = infoSecToken;
      tkn.Counter = fp.GetCounter();
-     tkn.LinkInfo = fp.Protect(cnt, infoSecToken);   // Protect InfoSec Content
+     tkn.LinkInfo = fp.Protect(cnt, infoSecToken);   // One Cipher -> Protect Content
      string pData = tkn.Encode(fp);
 
      // Post InfoSecToken
