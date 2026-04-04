@@ -9,3 +9,4 @@ Work Flow - Information Theoretic Secured InfoSec-(information with need to know
 6. Access to device is via a mandatory biometric authentication.
 
 Device can store and view SCI information objects with or without "codeword" support.
+All communications are asynchronous datagrams and ITS protected via the One Cipher.
