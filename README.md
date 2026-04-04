@@ -13,4 +13,4 @@ Note
 1. Medley is the codename for the proprietry trade secret based ITS-KMS.
 Medley is keep as a tarde secret not for security reasons (Kerchoffs Principle) rather to maintain a strategic advantage, protect operational security, and ensure the effectiveness of operational deployments via 'InfoSec as a Service'.
 These trade secret algorithms, often form part of "algorithmic warfare," are used to enhance operational security, in ways that adversaries cannot easily predict or counter.
-The sole measn of review for this InfoSec solutioon is the provided Information Theoretic Seurity 'Proof-of-Security' as published in this site.
+The sole means of review for this InfoSec solution is the provided Information Theoretic Seurity 'Proof-of-Security' as published in this site.
