@@ -15,4 +15,4 @@ Medley is keep as a trade secret not for security reasons (Kerchoffs Principle) 
 These trade secret algorithms, often form part of "algorithmic warfare," are used to enhance operational security, in ways that adversaries cannot easily predict or counter.
 The sole means of review for this InfoSec solution is the provided Information Theoretic Seurity 'Proof-of-Security' as published in this site.
 2. This solution is available on-demand 'soley' as a hosted or Azure cloud based InfoSec security as a service, within any Azure availablity zone worldwide..
-3. As the One Cipher provides universal Perfect Information Security, the need to diffeentiate between the protection afforded to RESTRICTED and TOP-SECRET self deprecates to SCI/Codewords.
+3. As the One Cipher provides universal Perfect Information Security, the need to diffeentiate between the protection afforded to RESTRICTED and TOP-SECRET self deprecates to SCI/Codewords or 'need to know'.
