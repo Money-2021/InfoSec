@@ -23,6 +23,7 @@
      string shash = objectId + sin;
      string ssign = fp.Sign(shash);
      _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
+     _httpClient.DefaultRequestHeaders.Add("x-id", objectId);
 
      HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
      if (response.IsSuccessStatusCode)
