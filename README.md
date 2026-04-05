@@ -20,3 +20,4 @@ The sole means of review for this InfoSec solution is the provided Information T
 2. This solution is available on-demand 'soley' as a hosted or Azure cloud based InfoSec security as a service, within any Azure availablity zone worldwide..
 3. As the One Cipher provides universal Perfect Information Security, the need to differntiate between the protection afforded to RESTRICTED and TOP-SECRET self deprecates to SCI/Codewords or 'need to know'.
 The compartment owner is the sole means to determine and cryptographically restict access to Sensative Information via the ITS-InfoSec platform.
+4. InfoSec tragets High-value information with long-term confidentiality needs, such as state secrets, PII (personally identifiable information), healthcare records, and intellectual property.
