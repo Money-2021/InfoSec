@@ -7,7 +7,7 @@ Defence Information Security (INFOSEC) involves protecting sensitive defence dat
 
 InfoSec is designed to assist defence organisations in rapidly meeting complex requirements for sensitive information handling and sharing, including up to TOP SECRET compartmented information, with codewords. Information custodians can set up secure workspaces and ITAR compartments to share and collaborate on export controlled information, knowing only authorized users will have access to the information with ITS secured and hence ITAR compliant dissemination controls. Défense Industry organizations can consume the SaaS cloud based platform as they need, without the substantial costs of implementing new on-premises secured ICT infrastructure.
 
-This InfoSec solution is immuner from "Harvest now, decrypt later" (HNDL) cyberattack vectors, where threat actors steal and store encrypted, sensitive data today, intending to decrypt it later using future, powerful quantum computers. 
+This InfoSec solution is immune from "Harvest now, decrypt later" (HNDL) cyberattack vectors, where threat actors steal and store encrypted, sensitive data today, intending to decrypt it later using future, powerful quantum computers. 
 This threat makes long-term information vulnerable to "Q-Day"—when quantum computing breaks all current and PQC algorithm.
 
 Secure systems must always be simple to have any chance of being secure, this InfoSec solution has two operations Store and Retrieve...
