@@ -1,0 +1,27 @@
+
+ [TestMethod]
+ public void infoSec_msg_send()
+ {
+     // Infrastructure-less secure mesaging.
+     SET_INFO();
+     string folder = Environment.GetEnvironmentVariable("Envionment");
+
+     string sin = Environment.GetEnvironmentVariable("DeviceTestA");
+     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+
+     // Msg self, should be message receiver
+     MsgMe m = new MsgMe(fp);
+     string msgMeToken = m.Encode();
+
+     // Send Secure Messsage
+     byte[] cnt = Encoding.UTF8.GetBytes("Test");
+     Fido.MsgToken tkn = new Fido.MsgToken(cnt);
+     tkn.Subject = "Test Msg";
+     string msg = tkn.Encode(fp, msgMeToken);
+
+     // Send secure Mesage to receipient via any means offline or online.
+     // Process receive msg
+     Fido.MsgToken tk = Fido.MsgToken.Decode(fp, msg);
+
+ }
