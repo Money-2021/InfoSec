@@ -1,5 +1,5 @@
 
-This is a P1P-Offline, infastructure-less ITS (One Cipher) secure mesaging unit test case. 
+This is a P2P-Offline, infastructure-less ITS (One Cipher) secure mesaging unit test case. 
 [TestMethod]
  public void infoSec_msg_send()
  {
