@@ -6,22 +6,46 @@
      SET_INFO();
      string folder = Environment.GetEnvironmentVariable("Envionment");
 
-     string sin = Environment.GetEnvironmentVariable("DeviceTestA");
+     string sin = Environment.GetEnvironmentVariable("TestA");
      string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
      Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
 
-     // Msg self, should be message receiver
+     // MsgMe receiver token
      MsgMe m = new MsgMe(fp);
      string msgMeToken = m.Encode();
+
+     // Sender
+     string device_sin = Environment.GetEnvironmentVariable("DeviceTestA");
+     userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+     fp = new Fido.FidoProvider(userTokenPath);
 
      // Send Secure Messsage
      byte[] cnt = Encoding.UTF8.GetBytes("Test");
      Fido.MsgToken tkn = new Fido.MsgToken(cnt);
      tkn.Subject = "Test Msg";
+     tkn.FileName = "Test.txt";
      string msg = tkn.Encode(fp, msgMeToken);
 
      // Send secure Mesage to receipient via any means offline or online.
+     string path = @"D:\Examples\" + folder + "\\Msg-" + sin + ".json";
+     File.WriteAllText(path, msg);
+ }
+ [TestMethod]
+ public void infoSec_msg_rec()
+ {
+     // Infrastructure-less secure mesaging.
+     SET_INFO();
+     string folder = Environment.GetEnvironmentVariable("Envionment");
+
+     string sin = Environment.GetEnvironmentVariable("TestA");
+     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+
+     string path = @"D:\Examples\" + folder + "\\Msg-" + sin + ".json";
+     string msg = File.ReadAllText(path);
+
      // Process receive msg
      Fido.MsgToken tk = Fido.MsgToken.Decode(fp, msg);
+
 
  }
