@@ -4,7 +4,7 @@ There are two examples
 2. InfoSec Secure Object
 Simply provide the decryption key?
 It is well known that XORing a ciphertext with its known plaintext will expose the key or portion of the key used for that specific segment of the message...
-That is not the point of these examples, or the encryption process itself.
+That is not the point of these examples, or the encryption process itself. i.e if one knows the plaintext why bother at all?
 
 Use jwt.io to display contents.
 -- 1. Offline Secure Message
