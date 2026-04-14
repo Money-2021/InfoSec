@@ -6,7 +6,7 @@ There are two examples
 It is well known that XORing a ciphertext with its known plaintext will expose the key or portion of the key used for that specific segment of the message...
 That is not the point of these examples, or the encryption process itself. i.e if one knows the plaintext why bother at all?
 Hint: the key is 645 bytes long..
-Simply provide the entire decryption key?
+Simply provide A One Cipher VERIFIED RESULT AS THE AEAD Tag is not derived from the decryption key?
 
 Use jwt.io to display contents.
 -- 1. Offline Secure Message
