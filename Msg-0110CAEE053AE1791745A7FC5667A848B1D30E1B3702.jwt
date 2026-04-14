@@ -3,6 +3,8 @@ There are two examples
 1. Offline Secure Message
 2. InfoSec Secure Object
 Simply provide the decryption key?
+It is well known that XORing a ciphertext with its known plaintext will expose the key or portion of the key used for that specific segment of the message...
+That is not the point of these examples.
 
 Use jwt.io to display contents.
 -- 1. Offline Secure Message
