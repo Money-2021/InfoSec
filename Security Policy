@@ -1,0 +1,8 @@
+This is the minium Mandatory Security Policy for InfoSec TS-SCI with codeward..
+
+Each end device with a Fido Provider installed SHALL:
+1. Utilise end device hardware with a TPM 2.0 secure device.
+2. Utilise a OS with Secure Boot via this TMP 2.0 device
+3. Enable per access account, biometric (fingerprint authetication) via extenal fingerprint hardware linked to, and utilising the TPM 2.0 device.
+4. The external hardware fingerprint reade shall securely store the finger print data on the external hardware ONLY. The finger print data shall never be stored on the end device.
+5. The external USB fingerprint reader shall store upto 10 sets of finger print data, this data shall require a device PIN to bind to any OS account.
