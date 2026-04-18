@@ -30,4 +30,4 @@ The sole means of review for this InfoSec solution is the provided Information T
 The compartment owner is the sole means to determine and cryptographically restict access to Sensative Information via the ITS-InfoSec platform.
 4. InfoSec tragets High-value information with long-term confidentiality needs, such as state secrets, PII (personally identifiable information), healthcare records, and intellectual property.
 5. Sensitive Compartmented Information (SCI) and the facilities that house it (SCIFs) are specifically designed to restrict information, not facilitate searching. 
-Hence the InfoSec Vault has no "seach" facility as SCI operates on an "over wall" model, the compartment owner is soley responsible for mainatining a linkage between the returned ObjectId and any information object, and assocaited codeword.
+Hence the InfoSec Vault has no "seach" facility as SCIF solution operates on an "over wall" model, the compartment owner is soley responsible for mainatining a linkage between the returned ObjectId and any information object, and assocaited codeword.
