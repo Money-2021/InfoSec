@@ -1,58 +1,59 @@
  [TestMethod]
- public void UseCase_store()
- {
-     SET_INFO();
-     string folder = Environment.GetEnvironmentVariable("Envionment");
+public void UseCase_store()
+{
+    SET_INFO();
+    string folder = Environment.GetEnvironmentVariable("Envionment");
 
-     string sin = Environment.GetEnvironmentVariable("DeviceTestA");
-     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
-     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+    string sin = Environment.GetEnvironmentVariable("DeviceTestA");
+    string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+    Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
 
-     // Obtain VaultMe JwToken authorisation
-     string infoSecToken = InfoSecSupport.VaultMe(userTokenPath);
-     byte[] cnt = Encoding.UTF8.GetBytes("Test");
-     string filename = "Test.txt";
-     string jwk = JwtProvider.ExtractJwk(infoSecToken);
+   
+    string infoSecToken = InfoSecSupport.VaultMe(userTokenPath);
+   
 
-     // Create New InfoSec Object
-     InfoSecToken tkn = new InfoSecToken();
-     tkn.Jti = Fido.EllipticCurves.CsPrng.RandomGuid();
-     tkn.ObjectHash = new SHAKE256(64 * 8).ComputeHash(cnt);
-     tkn.ObjectId = new Guid(tkn.ObjectHash.TakeLast(16).ToArray());
-     tkn.FileName = filename;
-     tkn.JwToken = infoSecToken;
-     tkn.Counter = fp.GetCounter();
-     tkn.LinkInfo = fp.Protect(cnt, infoSecToken);   // One Cipher -> Protect Content
-     string pData = tkn.Encode(fp);
+    byte[] cnt = Encoding.UTF8.GetBytes("Test");
+    string filename = "Test.txt";
+     string jwk = SqlServer.Providers.JwtProvider.ExtractJwk(infoSecToken);
 
-     // Post InfoSecToken
-     StringContent content = new StringContent(pData);
+    InfoSecToken tkn = new InfoSecToken();
+    tkn.Jti = Fido.EllipticCurves.CsPrng.RandomGuid();
+    tkn.ObjectHash = new SHAKE256(64 * 8).ComputeHash(cnt);
+    tkn.ObjectId = new Guid(tkn.ObjectHash.TakeLast(16).ToArray());
+    tkn.FileName = filename;
+    tkn.JwToken = infoSecToken;
+    tkn.Counter = fp.GetCounter();
+    tkn.LinkInfo = fp.Protect(cnt, infoSecToken);   // Protect InfoSec 
+    string pData = tkn.Encode(fp);
 
-     // Extract Function endpoint from Device Token
-     Uri _baseUri = new Uri(fp.Audience());
-     // Build funtion endpoint Uri
-     HttpClient _httpClient = new HttpClient();
-     string _relativeUrl = "InfoSec/Store";
-     Uri _uri = new Uri(_baseUri, _relativeUrl);
-     _httpClient.BaseAddress = _baseUri;
-     // Add User Jwtoken
-     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
-     HttpResponseMessage response = _httpClient.PostAsync(_uri, content).Result;
-     if (response.IsSuccessStatusCode)
-     {
-         // Save objectId for file mapping 
-         string objectId = response.Content.ReadAsStringAsync().Result;
 
-     }
-     else
-     {
-         // fail
-         string error = response.Content.ReadAsStringAsync().Result;
-         throw new Exception(error);
-     }
-    
+    // Post InfoSecToken
+    StringContent content = new StringContent(pData);
 
- }
+    // Extract Function endpoint from Device Token
+    Uri _baseUri = new Uri(fp.Audience());
+    // Build funtion endpoint Uri
+    HttpClient _httpClient = new HttpClient();
+    string _relativeUrl = "api/Store";
+    Uri _uri = new Uri(_baseUri, _relativeUrl);
+    _httpClient.BaseAddress = _baseUri;
+    // Add User Jwtoken
+    _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+    HttpResponseMessage response = _httpClient.PostAsync(_uri, content).Result;
+    if (response.IsSuccessStatusCode)
+    {
+        // Save objectId for file mapping 
+        string objectId = response.Content.ReadAsStringAsync().Result;
 
+    }
+    else
+    {
+        // fail
+        string error = response.Content.ReadAsStringAsync().Result;
+        throw new Exception(error);
+    }
+   
+
+}
 Note
 1.  fp.GetCounter(); counter is a security feature where the Fido provider increments a count after every operation. The server checks this number to detect if a fido provider has been cloned, as a cloned device would show a backward or significantly different count compared to the device original.
