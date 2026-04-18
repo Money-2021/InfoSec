@@ -1,50 +1,52 @@
- [TestMethod]
- public void UseCase_retieve()
- {
-     SET_INFO();
-     string folder = Environment.GetEnvironmentVariable("Envionment");
+    [TestMethod]
+   public void UseCase_retieve()
+   {
+       SET_INFO();
+       string folder = Environment.GetEnvironmentVariable("Envionment");
 
-     string sin = Environment.GetEnvironmentVariable("DeviceTestA");
-     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
-     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+       string sin = Environment.GetEnvironmentVariable("DeviceTestA");
+       //sin = Environment.GetEnvironmentVariable("TestA");
+       string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+       Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
 
-     // Extract Function endpoint from Device Token
-     Uri _baseUri = new Uri(fp.Audience());
-     // Build funtion endpoint Uri
-     HttpClient _httpClient = new HttpClient();
-     string _relativeUrl = "api/Retrieve";
-     Uri _uri = new Uri(_baseUri, _relativeUrl);
-     _httpClient.BaseAddress = _baseUri;
-     // Add User Jwtoken
-     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+       string objectId = "9c888547-77bf-437b-9ea8-2fe9eebf7f06"; // Add Object Identifier returned from Store
 
-     // Device Signature
-     string objectId = "9c888547-77bf-437b-9ea8-2fe9eebf7f06"; // Add Object Identifier returned from Store
-     string shash = objectId + sin;
-     string ssign = fp.Sign(shash);
-     _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
-     _httpClient.DefaultRequestHeaders.Add("x-id", objectId);
+       // Extract Function endpoint from Device Token
+       Uri _baseUri = new Uri(fp.Audience());
+       // Build funtion endpoint Uri
+       HttpClient _httpClient = new HttpClient();
+       string _relativeUrl = "api/Retrieve";
+       Uri _uri = new Uri(_baseUri, _relativeUrl);
+       _httpClient.BaseAddress = _baseUri;
+       // Add User Jwtoken
+       _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+       _httpClient.DefaultRequestHeaders.Add("x-id", objectId);
 
-     HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
-     if (response.IsSuccessStatusCode)
-     {
-         // Async download via SAS Uri
-         string rsp = response.Content.ReadAsStringAsync().Result;
-         InfoSecSupport.VaultedResponse r = InfoSecSupport.VaultedResponse.Decode(rsp);
-         byte[] pData = r.GetUrlContent().Result;
+       // Device Signature
+       string shash = objectId + sin;
+       string ssign = fp.Sign(shash);
+       _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
 
-         // Device unprotect 
-         byte[] CBytes = fp.DeviceEcDhUnProtect(pData, r.Jwk);
-         string content = Encoding.UTF8.GetString(CBytes);
-         Assert.AreEqual("Test", content);
+       HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
+       if (response.IsSuccessStatusCode)
+       {
+           // Async download via SAS Uri
+           string rsp = response.Content.ReadAsStringAsync().Result;
+           InfoSecSupport.VaultedResponse r = InfoSecSupport.VaultedResponse.Decode(rsp);
+           byte[] pData = r.GetUrlContent().Result;
 
-     }
-     else
-     {
-         // fail
-         string error = response.Content.ReadAsStringAsync().Result;
-         throw new Exception(error);
-     }
-            
+           // Device unprotect 
+           byte[] CBytes = fp.DeviceEcDhUnProtect(pData, r.Jwk);
+           string content = Encoding.UTF8.GetString(CBytes);
+           Assert.AreEqual("Test", content);
 
- }
+       }
+       else
+       {
+           // fail
+           string error = response.Content.ReadAsStringAsync().Result;
+           throw new Exception(error);
+       }
+              
+
+   }
