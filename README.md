@@ -29,3 +29,4 @@ The sole means of review for this InfoSec solution is the provided Information T
 3. As the One Cipher provides universal Perfect Information Security, the need to differntiate between the protection afforded to RESTRICTED and TOP-SECRET self deprecates to SCI/Codewords or 'need to know'.
 The compartment owner is the sole means to determine and cryptographically restict access to Sensative Information via the ITS-InfoSec platform.
 4. InfoSec tragets High-value information with long-term confidentiality needs, such as state secrets, PII (personally identifiable information), healthcare records, and intellectual property.
+5. The InfoSec Vault has no "seach" facility as SCI operates on an "over wall" model, the compartment owner is soley responsible for mainatining a linkage between the returned ObjectId and any information object, and assocaited codeword.
