@@ -11,3 +11,6 @@ Each end device with a Fido Provider installed SHALL:
 3. Enable per access account, biometric (fingerprint authetication) via extenal fingerprint hardware linked to, and utilising the TPM 2.0 device.
 4. The external hardware fingerprint reade shall securely store the finger print data on the external hardware ONLY. The finger print data shall never be stored on the end device.
 5. The external USB fingerprint reader shall store upto 10 sets of finger print data, this data shall require a device PIN to bind to any OS account.
+6. Within any secure device whcih has access to SCI information object, the object must remain ITS encrypted. When a information object is viewed (digital copy) 
+the system must isolate and pin the memory to ensure no non-ITS secured information object exists.
+7. An ITS secure shreader must be used to destroy any Information Object.
