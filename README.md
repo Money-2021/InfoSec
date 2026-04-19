@@ -16,6 +16,7 @@ ITS Secured offline and infastructreless mesaging service.
 Offline messaging ensure that people can exchange critical updates, coordinate tasks, and maintain operations without continuous internet access. 
 Offline secure messaging prioritize user privacy through end-to-end encryption and decentralized structures, avoiding central servers, all forms of server based storage that can be monitored censored or shut down. 
 Offline secure messaging removes all forms of meta-data and traffic flow analysis attack vectors. Offline secure messaging supports Information Theoretic Secure Ciphers or perfect security as long as the key remains secret. No keys are ever stored within any Offline secure messaging elements.
+Offline secure messaging make use of an intergrated Quantium Random Number generator source (QRND) to ensure suffient entropy for all secure mesages..
 
 Offline secure messaging can operate device-to-device without the need for any server or communications infrastructure (any media can be used as required or available). Censorship-free device-to-device messaging bypasses centralized servers and related attacks.
 Offline secure messaging allows users to self-host infrastructure, and rely on built-in Information Threptic Secured encryption and decentralised metadata protection to mitigate trust concerns.
