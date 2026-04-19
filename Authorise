@@ -21,8 +21,6 @@ User or Compartment owner requests new device authorisation token.
      // Add User Jwtoken
      _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
 
-     SharedProviders.Models.TokenType type = JwtProvider.ExtractTokenType(fp.GetJwToken());
-
      // User Signature
      string shash = "AuthToken" + sin;
      string ssign = fp.Sign(shash);
