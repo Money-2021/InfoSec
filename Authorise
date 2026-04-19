@@ -1,0 +1,47 @@
+User or Compartment owner requests new device authorisation token.
+
+ [TestMethod]
+ public void UseCase_authorise()
+ {
+     SET_INFO();
+     string folder = Environment.GetEnvironmentVariable("Envionment");
+
+     string sin = Environment.GetEnvironmentVariable("TestA");
+     //sin = Environment.GetEnvironmentVariable("TestA");
+     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+
+     // Extract Function endpoint from Device Token
+     Uri _baseUri = new Uri(fp.Audience());
+     // Build funtion endpoint Uri
+     HttpClient _httpClient = new HttpClient();
+     string _relativeUrl = "api/AuthToken";
+     Uri _uri = new Uri(_baseUri, _relativeUrl);
+     _httpClient.BaseAddress = _baseUri;
+     // Add User Jwtoken
+     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+
+     SharedProviders.Models.TokenType type = JwtProvider.ExtractTokenType(fp.GetJwToken());
+
+     // User Signature
+     string shash = "AuthToken" + sin;
+     string ssign = fp.Sign(shash);
+     _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
+
+     HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
+     if (response.IsSuccessStatusCode)
+     {
+         // Device AuthToken 
+         string rsp = response.Content.ReadAsStringAsync().Result;
+         // Save Device Authorisation token for Fido enrollement
+
+     }
+     else
+     {
+         // fail
+         string error = response.Content.ReadAsStringAsync().Result;
+         throw new Exception(error);
+     }
+
+
+ }
