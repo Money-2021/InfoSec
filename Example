@@ -1,5 +1,6 @@
 
 In accordance with Kerchoffs Principle, here is an actuual InfoSec Blob..
+The information Object is One Cipher encrypted within the Jwe field below.
 
 {
   "Jti": "1016c3a3-7963-b626-0aac-7a8c9769f9c5",
