@@ -1,0 +1,6 @@
+Information secure shredder for in memory or backing store information Objects
+Secure, permanent destruction of information in memory on backing storage is problematic in modern operating systems, because they are largely ineffective.
+SSDs do not overwrite data in place. When a shredder tells an SSD to overwrite a file, the drive’s firmware often writes the new data to a completely different location to manage wear, leaving the original "sensitive" data intact until garbage collection cleans it up later.
+
+ byte[] data = RandomNumberGenerator.GetBytes(512);
+ Fido.SOneCipher.Shread(ref data);
