@@ -21,9 +21,9 @@ including but not limited to artificial intelligence, natural language processin
 and may be held liable for any damages resulting from such use. All rights under this licence are terminated.
 4. Any content incorporation within or processing by GitHub Copilot is considered a breach of this License.
 
-The Fido provider and  fido.dll have no rights assigned, and can ONLY be redistributed (royaltity free) with a end applaiction developed indpendently.
-The dll may not be dispributed indpendenly from the end use applicition.
-It is a direct vilation of this licence to no reverse enginee the fido.dll, decompile, disassemble, or analyze the software to discover source code or trade secret.
+The Fido provider and  fido.dll have no rights assigned, and can ONLY be redistributed (royaltity free) with a end applaiction independly developed.
+The dll may not be distributed indpendenly from the end use applicition.
+It is a direct vilation of this licence to reverse enginee, decompile, disassemble, or analyze the the fido.dll (software) to discover source code or trade secrets.
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
