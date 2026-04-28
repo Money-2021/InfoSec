@@ -14,3 +14,4 @@ Each end device with a Fido Provider installed SHALL:
 6. Within any secure device whcih has access to SCI information object, the object must remain ITS encrypted. When a information object is viewed (digital copy) 
 the system must isolate and pin the memory to ensure no non-ITS secured information object exists.
 7. An ITS secure shreader must be used to destroy any Information Object.
+8. Device JwTokens have a maxium reveral peiood of 30 days, and all assocaited variables need to be concurrently renewed with the JwToken..
