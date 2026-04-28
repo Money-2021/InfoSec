@@ -23,7 +23,7 @@ and may be held liable for any damages resulting from such use. All rights under
 
 The Fido provider and  fido.dll have no rights assigned, and can ONLY be redistributed (royalty free) with a end application independently developed.
 The dll may not be distributed independently from the end use application.
-It is a direct violation of this licence to reverse engineer, decompile, disassemble, or analyze the fido.dll (software) to discover source code or trade secrets.
+This licence shall terminate with cause, due to a violation of this licence to reverse engineer, decompile, disassemble, or analyze the fido.dll (software) to discover source code or trade secrets.
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
