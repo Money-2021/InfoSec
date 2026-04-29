@@ -1,165 +1,165 @@
-public  class InfoSecSupport
-{
+ public  class InfoSecSupport
+ {
 
-    public class VaultedResponse
-    {
-        public Guid ObjectId { get; set; }
-        public string Jwk { get; set; }
-        public string FileName { get; set; }
-        public Uri Download { get; set; }
-        public async Task<byte[]?> GetUrlContent()
-        {
-            using (var client = new HttpClient())
-            using (var result = await client.GetAsync(Download.AbsoluteUri))
-                return result.IsSuccessStatusCode ? await result.Content.ReadAsByteArrayAsync() : null;
-        }
+     public class VaultedResponse
+     {
+         public Guid ObjectId { get; set; }
+         public string Jwk { get; set; }
+         public string FileName { get; set; }
+         public Uri Download { get; set; }
+         public async Task<byte[]?> GetUrlContent()
+         {
+             using (var client = new HttpClient())
+             using (var result = await client.GetAsync(Download.AbsoluteUri))
+                 return result.IsSuccessStatusCode ? await result.Content.ReadAsByteArrayAsync() : null;
+         }
 
-        public static VaultedResponse Decode(string json)
-        {
-            var _payload = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
-            // Decode Vaulted Object
-            VaultedResponse vo = new VaultedResponse();
-            foreach (KeyValuePair<string, object> kvp in _payload)
-            {
-                string key = kvp.Key.ToLower();
-                object value = kvp.Value;
-                switch (key.ToLower())
-                {
-                    case "filename":
-                        vo.FileName = value.ToString();
-                        break;
-                    case "jwk":
-                        vo.Jwk = value.ToString();
-                        break;
-                    case "objectid":
-                        vo.ObjectId = new Guid(value.ToString());
-                        break;
-                    case "download":
-                        vo.Download = new Uri(value.ToString());
-                        break;
-                }
+         public static VaultedResponse Decode(string json)
+         {
+             var _payload = JsonSerializer.Deserialize<Dictionary<string, object>>(json);
+             // Decode Vaulted Object
+             VaultedResponse vo = new VaultedResponse();
+             foreach (KeyValuePair<string, object> kvp in _payload)
+             {
+                 string key = kvp.Key.ToLower();
+                 object value = kvp.Value;
+                 switch (key.ToLower())
+                 {
+                     case "filename":
+                         vo.FileName = value.ToString();
+                         break;
+                     case "jwk":
+                         vo.Jwk = value.ToString();
+                         break;
+                     case "objectid":
+                         vo.ObjectId = new Guid(value.ToString());
+                         break;
+                     case "download":
+                         vo.Download = new Uri(value.ToString());
+                         break;
+                 }
 
-            }
-            return vo;
-        }
-    }
-    public class InfoSecToken
-    {
-        public Guid Jti { get; set; }
-        public string SecureIdentity { get; set; }
-        public byte[] ObjectHash { get; set; }
-        public Guid ObjectId { get; set; }
-        public string LinkInfo { get; set; }
-        public string FileName { get; set; }
-        public string Role { get; set; }
-        public string Jwk { get; set; }
-        public string JwToken { get; set; } // MsgMe Token
-        public string Codeword { get; set; }
-        public ulong Counter { get; set; }
-        public bool Verified { get; set; }
+             }
+             return vo;
+         }
+     }
+     public class InfoSecToken
+     {
+         public Guid Jti { get; set; }
+         public string SecureIdentity { get; set; }
+         public byte[] ObjectHash { get; set; }
+         public Guid ObjectId { get; set; }
+         public string LinkInfo { get; set; }
+         public string FileName { get; set; }
+         public string Role { get; set; }
+         public string Jwk { get; set; }
+         public string JwToken { get; set; } // MsgMe Token
+         public string Codeword { get; set; }
+         public ulong Counter { get; set; }
+         public bool Verified { get; set; }
 
-        public InfoSecToken()
-        {
-            Verified = false;
-        }
+         public InfoSecToken()
+         {
+             Verified = false;
+         }
 
-       
-        public string Encode(Fido.FidoProvider fp)
-        {
-            // Serialise Header
-            MemoryStream ms = new MemoryStream();
-            var serializeOptions = new JsonWriterOptions
-            {
-                Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
-            };
-            using (Utf8JsonWriter writer = new Utf8JsonWriter(ms, serializeOptions))
-            {
-                writer.WriteStartObject();
-                writer.WritePropertyName("alg");
-                writer.WriteStringValue("Ed25519");
-                writer.WritePropertyName("typ");
-                writer.WriteStringValue("JWT");
-                writer.WriteEndObject();
+        
+         public string Encode(Fido.FidoProvider fp)
+         {
+             // Serialise Header
+             MemoryStream ms = new MemoryStream();
+             var serializeOptions = new JsonWriterOptions
+             {
+                 Encoder = System.Text.Encodings.Web.JavaScriptEncoder.UnsafeRelaxedJsonEscaping
+             };
+             using (Utf8JsonWriter writer = new Utf8JsonWriter(ms, serializeOptions))
+             {
+                 writer.WriteStartObject();
+                 writer.WritePropertyName("alg");
+                 writer.WriteStringValue("Ed25519");
+                 writer.WritePropertyName("typ");
+                 writer.WriteStringValue("JWT");
+                 writer.WriteEndObject();
 
-            }
-            string encodedJwEHeader = Fido.FidoProvider.Base64Url.Encode(ms.ToArray());
-            //string encodedHash = Convert.ToBase64String(hashBytes);
+             }
+             string encodedJwEHeader = Fido.Base64Url.Encode(ms.ToArray());
+             //string encodedHash = Convert.ToBase64String(hashBytes);
 
-            // serialise Payload
-            ms = new MemoryStream();
-            using (Utf8JsonWriter writer = new Utf8JsonWriter(ms, serializeOptions))
-            {
-                writer.WriteStartObject();
-                writer.WritePropertyName("Type");
-                writer.WriteStringValue("InfoSec"); // Object Meta data, One Cipher encrypted object is inside Post data
-                writer.WritePropertyName("Jti");
-                writer.WriteStringValue(Jti.ToString());
-                writer.WritePropertyName("FileName");
-                writer.WriteStringValue(FileName);
-                writer.WritePropertyName("LinkInfo");
-                writer.WriteStringValue(LinkInfo);
-                writer.WritePropertyName("Codeword");
-                writer.WriteStringValue(Codeword);
-                writer.WritePropertyName("JwToken");
-                writer.WriteStringValue(JwToken);
-                writer.WritePropertyName("ObjectHash");
-                writer.WriteStringValue(Convert.ToBase64String(ObjectHash));
-                writer.WritePropertyName("ObjectId");
-                writer.WriteStringValue(ObjectId);
-                writer.WritePropertyName("Counter");
-                writer.WriteNumberValue(Counter);
-                writer.WriteEndObject();
+             // serialise Payload
+             ms = new MemoryStream();
+             using (Utf8JsonWriter writer = new Utf8JsonWriter(ms, serializeOptions))
+             {
+                 writer.WriteStartObject();
+                 writer.WritePropertyName("Type");
+                 writer.WriteStringValue("InfoSec"); // Object Meta data, One Cipher encrypted object is inside Post data
+                 writer.WritePropertyName("Jti");
+                 writer.WriteStringValue(Jti.ToString());
+                 writer.WritePropertyName("FileName");
+                 writer.WriteStringValue(FileName);
+                 writer.WritePropertyName("LinkInfo");
+                 writer.WriteStringValue(LinkInfo);
+                 writer.WritePropertyName("Codeword");
+                 writer.WriteStringValue(Codeword);
+                 writer.WritePropertyName("JwToken");
+                 writer.WriteStringValue(JwToken);
+                 writer.WritePropertyName("ObjectHash");
+                 writer.WriteStringValue(Convert.ToBase64String(ObjectHash));
+                 writer.WritePropertyName("ObjectId");
+                 writer.WriteStringValue(ObjectId);
+                 writer.WritePropertyName("Counter");
+                 writer.WriteNumberValue(Counter);
+                 writer.WriteEndObject();
 
-            }
-            string encodedPayload = Fido.FidoProvider.Base64Url.Encode(ms.ToArray());
-            string shash = encodedJwEHeader + "." + encodedPayload;
-            string sig = fp.Sign(shash);
-            string encodedJWESignature = sig;
-            return encodedJwEHeader + "." + encodedPayload + "." + encodedJWESignature;
-        }
+             }
+             string encodedPayload = Fido.Base64Url.Encode(ms.ToArray());
+             string shash = encodedJwEHeader + "." + encodedPayload;
+             string sig = fp.Sign(shash);
+             string encodedJWESignature = sig;
+             return encodedJwEHeader + "." + encodedPayload + "." + encodedJWESignature;
+         }
 
 
-    }
-    public static string VaultMe(string userTokenPath)
-    {
-        Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
-        // Extract endpoint from Device Token
-        Uri _baseUri = new Uri(fp.Audience());
+     }
+     public static string VaultMe(string userTokenPath)
+     {
+         Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+         // Extract endpoint from Device Token
+         Uri _baseUri = new Uri(fp.Audience());
 
-        // Obtain Function JwToken
-        HttpClient _httpClient = new HttpClient();
-        // Build funtion endpoint Uri
-        string _relativeUrl = "api/VaultMe";
-        Uri _uri = new Uri(_baseUri, _relativeUrl);
-        _httpClient.BaseAddress = _baseUri;
-        // Add Device Jwtoken
-        string token = fp.GetJwToken();
-        _httpClient.DefaultRequestHeaders.Add("x-token", token);
-        // Add device signature
-        string shash = fp.GetJwToken();
-        string ssign = fp.Sign(shash);
-        _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
-        // Get response
-        HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
-        if (response.IsSuccessStatusCode)
-        {
+         // Obtain Function JwToken
+         HttpClient _httpClient = new HttpClient();
+         // Build funtion endpoint Uri
+         string _relativeUrl = "api/VaultMe";
+         Uri _uri = new Uri(_baseUri, _relativeUrl);
+         _httpClient.BaseAddress = _baseUri;
+         // Add Device Jwtoken
+         string token = fp.GetJwToken();
+         _httpClient.DefaultRequestHeaders.Add("x-token", token);
+         // Add device signature
+         string shash = fp.GetJwToken();
+         string ssign = fp.Sign(shash);
+         _httpClient.DefaultRequestHeaders.Add("x-jws-signature", ssign);
+         // Get response
+         HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
+         if (response.IsSuccessStatusCode)
+         {
 
-            Stream receiveStream = response.Content.ReadAsStream();
-            StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
-            string jwToken = reader.ReadToEnd();
-            return jwToken;
-        }
-        else
-        {
-            // fail
-            string error = response.Content.ReadAsStringAsync().Result;
-            if (string.IsNullOrEmpty(error))
-            {
-                error = response.ReasonPhrase;
-            }
-            throw new Exception(error);
-        }
+             Stream receiveStream = response.Content.ReadAsStream();
+             StreamReader reader = new StreamReader(receiveStream, Encoding.UTF8);
+             string jwToken = reader.ReadToEnd();
+             return jwToken;
+         }
+         else
+         {
+             // fail
+             string error = response.Content.ReadAsStringAsync().Result;
+             if (string.IsNullOrEmpty(error))
+             {
+                 error = response.ReasonPhrase;
+             }
+             throw new Exception(error);
+         }
 
-    }
-  
-}
+     }
+   
+ }
