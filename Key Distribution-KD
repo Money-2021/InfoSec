@@ -36,6 +36,7 @@
      {
          // download vernan cipher protected secret (Medley vectors) bound to the devices..
          string connectToken = response.Content.ReadAsStringAsync().Result;
+         // Save for out of channel distribution vai any means.
          string fpath = @"D:\Examples\INFO\Files\\Connect-" + sin + ".jwt";
          System.IO.File.WriteAllText(fpath, connectToken);
 
