@@ -1,0 +1,57 @@
+
+ [TestMethod]
+ public void InfoSec_KD_connect()
+ {
+     // QKD replacement
+     SET_INFO();
+     string sin = Environment.GetEnvironmentVariable("TestA");
+     string userTokenPath = @"D:\Examples\Info\Token-" + sin + ".json";
+     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+
+     // Connected Devices     
+     string device_sinA = Environment.GetEnvironmentVariable("DeviceTestA");
+     string device_sinB = Environment.GetEnvironmentVariable("DeviceTestA1");
+     string[] devices = new string[] { device_sinA, device_sinB };
+
+     
+     
+     // Extract Function endpoint 
+       Uri _baseUri = new Uri(fp.Audience());
+
+     // Build funtion endpoint Uri
+     HttpClient _httpClient = new HttpClient();
+     string _relativeUrl = "api/Connect";
+     Uri _uri = new Uri(_baseUri, _relativeUrl);
+     _httpClient.BaseAddress = _baseUri;
+
+     // Add Device Jwtoken
+     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+
+     // Add devices as content 
+     string json = System.Text.Json.JsonSerializer.Serialize(devices);
+     StringContent content = new StringContent(json);
+
+     HttpResponseMessage response = _httpClient.PostAsync(_uri, content).Result;
+     if (response.IsSuccessStatusCode)
+     {
+         // download vernan cipher protected secret (Medley vectors) bound to the devices..
+         string connectToken = response.Content.ReadAsStringAsync().Result;
+         string fpath = @"D:\Examples\INFO\Files\\Connect-" + sin + ".jwt";
+         System.IO.File.WriteAllText(fpath, connectToken);
+
+         // Test Local Fido device decode of One Link KD -> Medley compressed vectors for use with Medley One Cipher
+         string deviceTokenPath = @"D:\Examples\Info\Token-" + device_sinA + ".json";
+         Fido.FidoProvider fd = new Fido.FidoProvider(deviceTokenPath);
+         byte[][] mVectors = fd.DeviceUnProtect(connectToken);
+
+         // For use with AES based encetptors, take last 64 bytes from mVectors[1]
+         byte[] aeskey = mVectors[1].TakeLast(64).ToArray();
+     }
+     else
+     {
+         // fail
+         string error = response.Content.ReadAsStringAsync().Result;
+         throw new Exception(error);
+     }
+
+ }
