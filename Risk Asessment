@@ -15,6 +15,7 @@ The search space for Medley vextors is greater than 2 ^ 2048 or 10 ^ 616..
 Cosmic Comparison:
 Atoms in the Universe: The observable universe contains roughly 10⁸⁰ atoms.
 Storage Reality: To store 2²⁵⁶ bytes, you would need to encode nearly one byte of data onto every single atom in the universe.
+Note even if this shannmon max entropy were quessed, it would have zero effect on the Medley One Cipher security.
 
 Proof of Time
 The proof of time algorithm is a space-time domain solution, not just time domain.
