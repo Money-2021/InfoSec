@@ -40,13 +40,19 @@
          string fpath = @"D:\Examples\INFO\Files\\Connect-" + sin + ".jwt";
          System.IO.File.WriteAllText(fpath, connectToken);
 
-         // Test Local Fido device decode of One Link KD -> Medley compressed vectors for use with Medley One Cipher
-         string deviceTokenPath = @"D:\Examples\Info\Token-" + device_sinA + ".json";
-         Fido.FidoProvider fd = new Fido.FidoProvider(deviceTokenPath);
-         byte[][] mVectors = fd.DeviceUnProtect(connectToken);
-
-         // For use with AES based encetptors, take last 64 bytes from mVectors[1]
-         byte[] aeskey = mVectors[1].TakeLast(64).ToArray();
+        // Test Local Fido device decode of One Link KD -> Medley compressed vectors for use with Medley One Cipher
+        // End Point A
+        string deviceTokenPath = @"D:\Examples\Info\Token-" + device_sinA + ".json";
+        Fido.FidoProvider fd = new Fido.FidoProvider(deviceTokenPath);
+        byte[][] mVectorsA = fd.DeviceUnProtect(connectToken);
+        // For use with AES based encryptors, take last 64 bytes from mVectors[1]
+        byte[] aeskey = mVectorsA[1].TakeLast(64).ToArray();
+        // End Point B
+        deviceTokenPath = @"D:\Examples\Info\Token-" + device_sinB + ".json";
+        fd = new Fido.FidoProvider(deviceTokenPath);
+        byte[][] mVectorsB = fd.DeviceUnProtect(connectToken);
+        // Ensure identical Medley vectors
+        CollectionAssert.AreEqual(mVectorsA, mVectorsB);
      }
      else
      {
