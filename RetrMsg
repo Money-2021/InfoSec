@@ -1,0 +1,46 @@
+
+
+ [TestMethod]
+ public void UseCase_retrMsg()
+ {
+     // Infrastructure-less secure mesaging.
+     SET_INFO();
+     string folder = Environment.GetEnvironmentVariable("Envionment");
+     string sitrep = "Date: 2026-04-25; Location: Sector Alpha; Units active: 3rd Infantry Battalion; Recent actions: Secured perimeter, identified enemy movement; Current status: All units operational.";
+
+     string sin = Environment.GetEnvironmentVariable("TestA");
+     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
+     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+
+     // Extract Function endpoint from Device Token
+     Uri _baseUri = new Uri(fp.Audience());
+     // Build funtion endpoint Uri
+     HttpClient _httpClient = new HttpClient();
+     string _relativeUrl = "api/RetrMsg";
+     Uri _uri = new Uri(_baseUri, _relativeUrl);
+     _httpClient.BaseAddress = _baseUri;
+     // Add User Jwtoken
+     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+ 
+     HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
+     if (response.IsSuccessStatusCode)
+     {
+         // Process 
+         string rsp = response.Content.ReadAsStringAsync().Result;
+         List<byte[]> msgs = System.Text.Json.JsonSerializer.Deserialize<List<byte[]>>(rsp);
+         foreach (byte[] msgBytes in msgs)
+         {
+             Fido.MsgToken t = Fido.MsgToken.Decode(fp, Encoding.UTF8.GetString(msgBytes)); // decode/decrypt message
+             string cnt = Encoding.UTF8.GetString(t.Cnt); // PlinText message
+             Assert.AreEqual(sitrep, cnt);
+         }
+     
+     }
+     else
+     {
+         // fail
+         string error = response.Content.ReadAsStringAsync().Result;
+         throw new Exception(error);
+     }
+
+ }
