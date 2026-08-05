@@ -1,0 +1,82 @@
+The Information Theretic Security-Proof, for the Medly-KMS, and One Cipher is based upon imformation theory as defined via the following six principles:
+
+1. Theoretical Proof...
+From Shannons 1949 paper, Communication Theory of Secrecy Systems, that an encryption system has perfect secrecy:
+a). P(M = mIC = c) = P(M = m) i.e. seeing a ciphertext doesn't give you any extra information about the plaintext. The probability of seeing a message m after the ciphertext has been observed is the same as the probability of the message without the ciphertext.
+b). P(C = cIM = mo) = P(C = cIM = mt ) i.e. the probability of ciphertext c is equally likely for 2 different messages. 
+c). The key is as long as the message and a key should be used uniquely with a probability 1/IKI where IKI is the key space. 
+Pr[M=m;C=c]=Pr[M=m] 
+
+Proving:
+. The knowledge of the Cyphertext is not helpful at all!
+. The result is independent of the capability of any attacker or computational resources.
+. The Medley One Cipher, based upon XOR as implemented, and has an output with shannon min-entropy of 1 bits per symbol,  in accordance with above is provably secure against all attacks (known and unknown).
+
+The above proof requres a "cryptographically secure" and verifaed shannon min-entropy, bit stream (CSRBG) as the proof only applies t the bit level, in order to implement a truly secure one-time pad. 
+The Medley Key Generator(KG) is one such example of a Cryptographically Secure Non-Deterministic Random Bit Generators (CSNRBG) . 
+It should be noted that a CSRBG cannot be computed soley from a TRNG seed, as this would produce a CSPRNG key, which would not meet the requireemnbst of the above proof.
+
+2. Verifable Proof...
+In order to achieve Inforamtion Theoretic Security, the outputs from each cipher must be validated against shannon min-entropy.
+After each validation the system can be considered as  Inforamtion Theoretic Secure.
+
+The following code is provided to allow self-validation of any claimed proof of security.
+ public static double CalculateMinEntropy(byte[] data)
+ {
+     // Converts each byte to a base-2 string and pads it to 8 characters
+     string s = string.Concat(bytes.Select(b => Convert.ToString(b, 2)));
+     int len = s.Length;
+     double maxP = s.GroupBy(c => c).Max(g => (double)g.Count() / len);
+     return -Math.Log2(maxP);
+ }
+
+3. Additional considerations.
+a) Malleability and active attack vectors
+Yet another issue has to be considered, namely the message authentication, which is not usually implemented in Vernam Ciphers.
+Malleability is common to all stream ciphers (Hanaoka, 2008). Also, the XOR operator is vulnerable to a known-plaintext attack, since XOR (plaintext, ciphertext) = key.
+Active attackers can also modify messages in transit, a weakness shared with all stream ciphers.
+The Medly solution adds proprietary athentication to each key to addresses these well known issues.
+
+b) Lastley Keys
+Kerckhoffs's principle, holds that a cryptosystem should be secure, even if everything about the system, except the key, is public knowledge. 
+Thus, cryptographic keys should generally be generated secretly and uniformly at random in the cryptosystem's key domain (universals); that is in the set of valid keys for the cryptosystem. What makes a key valid depends on the cryptosystem and often parameters (typically including key size).
+Since the adversary may know how our system works (Kerckhoffs's principle), we need to find a way to generate keys that don't only depend on a deterministic computation (which the adversary could reproduce). Therefore, all keys must depend on something that the adversary does not know. Such a thing is called a “true” random value.
+The proprietary KMS-Medley Key generator (KG) takes a QRNG (TRNG) seed and produces a Cryptographically Secure (non-deterministic) Random Bit Generators (CSRBG ) in accordance with Shannon min-entropy. Meaning each bit in the key sequence is equally likely to occur. 
+Medley is based upon a proprietry KG, which generates a CSRBG key stream upon demand, the KG TRNG seed is never stored, and has a secure ephemerial (one time) existance.
+Medley supports user defined KG-universals to enable the creation of arbitary key domains to suit a wide range of operational deployments of an ITS-KMS.
+
+4.Security Principles 
+SCI/Codeword or Commercial-Need to Know
+The solution supports Top Secret/Sensitive Compartmented Information or commercial need-to-know, cloud based solutions (hardware or software backed). 
+The ITS-KMS supports the implementation of Medley 'Univsersals" which guarentee seperation between cryptographic Key Generators, hence ensuring ITS based seperation of entangled Key Generators.
+All SCI compartments are cryptographically (ITS One Cipher) isolated from all other compartments.
+To ensure backward compatablity all existing human based codewaords can be ustilised to enforce "need to know" requirements for both military and commercial use cases.
+
+5. Cryptographicly Secure Keys
+Riddle me this?
+Can any deterministic function create entropy?
+The answer is always no, it cannot...
+It is a simple reality, that no computational function can create entropy as it is deterministic or a just a variat of a PRNG source of fixed entropy. A Key Generator is nondeterministic; hence it can create entropy via external real-world entropy. Thus, a Key Generator creates CSNBRNG keys. But the entropy is still limited to the entropy of the real-world source.
+Information Theoretic security requires, and is underpinned by the existence of a Cryptographic Secure Non-Deterministic Random Bit Stream generator anchored in a real-world entropy.
+
+A Cryptographic Secure Non-Deterministic Random Bit Stream(CSNBRNG) varable elngth key is not a key or even a QRND number in the typical sense, it must be a cryptographically secure key stream QRNG, which is not derived, via any computational algorithm. The key stream has to be derived (extracted) from a physical processes (in the case for medley from a QRND source).
+One cannot compute an algorithm to generate a 'key stream' as the result would be a deterministic and hence represent a predictable PRNG, not a cryptography secure key stream and be a non-deterministic key stream not computed directly from a seed/key.
+
+6. Last Mile Mandatory Security POlicy
+1. All comminations Shall be One Cipher (ITS) secured indpendent of communication media or sChannel security.
+2. All InfoSec devices require mandatory biometric authtication, such as Windows Hello finger prints or Android device finger prints for InFoSec use cases.
+3. All Vaulted Objects shall be end-to-end Once Cipher (device to device) secured before the applaiction of device to host and host One Cipher wrapped.
+
+Conclusion 
+The Medley (ITS-KMS) creates a pairwise, potentially infinate length, identical secure bit stream (all bits of the key have equal propablity) between two secure Identites (end point devices) according to this proof.
+
+Notes
+1. Medly is a pair-wise, cooperative key generation scheme, the Key Generation Cipher is provably (above) immune from all forms of attack vectors, as the CSNRBG keys are verifable crypyographically secure. 
+2. Medley One cipher, at an abstract level, is essential the XOR (vernam cipher) of two corporately generated shannon min-entropy bit streams.
+3. The Medley protocol produces a set of variable length Medley Vectors, these engangle the Key Generators to produce an identical CSNRBG bit stream (of potentially infinite length).
+3. Quantium Key Distribution (QKD) self deprecates as QKD, requires both participating parties need a) the physical devices, b) a connection between those that allows to run QKD, and 
+c) still some authentication method which either requires a shared secret or some complexity-theoretically secure signature scheme. In short in QKD the two parties have to know each other 
+before communicating and pre-stage shared data first. This defeats the purpose of QKD itself.
+4. All modern block ciphers produce determinitic or PRNG key schedules. Such deterministic key schedule, also called a key-schedule algorithm (at best aexist as a PRNG computed output), takes the master seed/key and generates a unique set of subkeys or internal state based on a fixed, mathematical process or computable algorithm. 
+This ensures that the same seed/key will always produce the same output, which is a core principle of how most modern and insecure ciphers operate.
+5. No f(x) or any computer is capable of producing entropy, as such any seed entropy cannot be increased due to any key schedule expansion.
