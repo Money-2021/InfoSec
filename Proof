@@ -30,6 +30,9 @@ The following code is provided to allow self-validation of any claimed proof of 
      return -Math.Log2(maxP);
  }
 
+If any cipher claims to be secure, the tested output using the above funtion, shann be greater than 0.99 bits per symbol to be considered secure.
+Scores under 0.99 reveal hidden patterns, biases, or repeating sequences that algorithms or bad actors can exploit, a value of 0.83 to 0.96 shows how week AES key schedules are today.
+
 3. Additional considerations.
 a) Malleability and active attack vectors
 Yet another issue has to be considered, namely the message authentication, which is not usually implemented in Vernam Ciphers.
