@@ -24,7 +24,7 @@ The following code is provided to allow self-validation of any claimed proof of 
 
  public static double CalculateMinEntropy(byte[] bytes)
  {
-     // Converts each byte to a base-2 string 
+     // Converts each byte to a base-2 string, with byte aligned padding. 
      string s = string.Concat(bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
      int len = s.Length;
      double maxP = s.GroupBy(c => c).Max(g => (double)g.Count() / len);
