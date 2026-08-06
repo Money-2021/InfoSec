@@ -21,10 +21,11 @@ In order to achieve Inforamtion Theoretic Security, the outputs from each cipher
 After each validation the system can be considered as  Inforamtion Theoretic Secure.
 
 The following code is provided to allow self-validation of any claimed proof of security.
- public static double CalculateMinEntropy(byte[] data)
+
+ public static double CalculateMinEntropy(byte[] bytes)
  {
-     // Converts each byte to a base-2 string and pads it to 8 characters
-     string s = string.Concat(bytes.Select(b => Convert.ToString(b, 2)));
+     // Converts each byte to a base-2 string 
+     string s = string.Concat(bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
      int len = s.Length;
      double maxP = s.GroupBy(c => c).Max(g => (double)g.Count() / len);
      return -Math.Log2(maxP);
