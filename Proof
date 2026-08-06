@@ -85,3 +85,4 @@ before communicating and pre-stage shared data first. This defeats the purpose o
 This ensures that the same seed/key will always produce the same output, which is a core principle of how most modern and insecure ciphers operate.
 5. No f(x) or any computer is capable of producing entropy, as such any seed entropy cannot be increased due to any key schedule expansion.
 6. Byte aligned padding reduces entropy and hence makes Min-Entropy calculations more restrictive, but it is required to ensure 256 byte outputs are always equal to 2048 bits. Without padding 5 becomes "101" instead of "00000101" and overall size would be reduced from actual 2048 bit array[] size.
+A 256 byte[] must always have 2049 bits.
