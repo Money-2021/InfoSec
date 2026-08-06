@@ -84,3 +84,4 @@ before communicating and pre-stage shared data first. This defeats the purpose o
 4. All modern block ciphers produce determinitic or PRNG key schedules. Such deterministic key schedule, also called a key-schedule algorithm (at best aexist as a PRNG computed output), takes the master seed/key and generates a unique set of subkeys or internal state based on a fixed, mathematical process or computable algorithm. 
 This ensures that the same seed/key will always produce the same output, which is a core principle of how most modern and insecure ciphers operate.
 5. No f(x) or any computer is capable of producing entropy, as such any seed entropy cannot be increased due to any key schedule expansion.
+6. Byte aligned padding reduces entropy and hence makes Min-Entropy calculations more restrictive, but it is required to ensure 256 byte outputs are always equal to 2048 bits.
