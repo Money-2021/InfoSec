@@ -18,7 +18,8 @@ It should be noted that a CSRBG cannot be computed soley from a TRNG seed, as th
 
 2. Verifable Proof...
 In order to achieve Inforamtion Theoretic Security, the outputs from each cipher must be validated against shannon min-entropy.
-After each validation the system can be considered as  Inforamtion Theoretic Secure.
+Only after a Pass result (validation) can the specific instance of the cipher output be considered as Inforamtion Theoretic Secure.
+No cipher can be generically considered secure unless each and every cipher output passes validation.
 
 The following code is provided to allow a binary self-validation of any claimed proof of security against any cipher output data stream.
 
