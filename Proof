@@ -20,8 +20,13 @@ It should be noted that a CSRBG cannot be computed soley from a TRNG seed, as th
 In order to achieve Inforamtion Theoretic Security, the outputs from each cipher must be validated against shannon min-entropy.
 After each validation the system can be considered as  Inforamtion Theoretic Secure.
 
-The following code is provided to allow self-validation of any claimed proof of security.
+The following code is provided to allow a binary self-validation of any claimed proof of security against any cipher output data stream.
 
+ public static bool Pass(byte[] data)
+ {
+     double d = CalculateMinEntropy(data);
+     return  Math.Round(d, 2, MidpointRounding.AwayFromZero) != 1;
+ }
  public static double CalculateMinEntropy(byte[] bytes)
  {
      // Converts each byte to a base-2 string, with byte aligned padding. 
