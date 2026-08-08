@@ -1,5 +1,6 @@
 [TestMethod]
-public void infoSec_devices()
+// List Compartment devices
+public void infoSec_devices_list()
 {
     SET_INFO();
     string sin = Environment.GetEnvironmentVariable("TestA");
@@ -40,3 +41,45 @@ public void infoSec_devices()
     }
 
 }
+// Request new Device Authorisation
+ [TestMethod]
+ public void infoSec_devices_add()
+ {
+     SET_INFO();
+     string sin = Environment.GetEnvironmentVariable("TestA");
+     string userTokenPath = @"D:\Examples\Info\Token-" + sin + ".json";
+     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
+
+     // Extract Function endpoint 
+     Uri _baseUri = new Uri(fp.Audience());
+
+     // Build funtion endpoint Uri
+     HttpClient _httpClient = new HttpClient();
+     string _relativeUrl = "api/Devices";
+     Uri _uri = new Uri(_baseUri, _relativeUrl);
+     _httpClient.BaseAddress = _baseUri;
+
+     // Pass parameters using a Dictionary
+     // Valid Actions L= List Device Sins , A = Request device authorisation token, D = Remove Device from SCI compartment
+     var queryParams = new Dictionary<string, string?>
+     {
+         { "Action", "A" }
+     };
+
+     string completeUri = QueryHelpers.AddQueryString(_uri.ToString(), queryParams);
+     // Add Device Jwtoken
+     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
+     HttpResponseMessage response = _httpClient.GetAsync(completeUri).Result;
+     if (response.IsSuccessStatusCode)
+     {
+         // Download One Cipher protected shared secret (Medley vectors) bound to each devices..
+         string authToken = response.Content.ReadAsStringAsync().Result;
+     }
+     else
+     {
+         // fail
+         string error = response.Content.ReadAsStringAsync().Result;
+         throw new Exception(error);
+     }
+
+ }
