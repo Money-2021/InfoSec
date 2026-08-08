@@ -26,7 +26,7 @@ The following code is provided to allow a binary self-validation of any claimed 
  public static bool Pass(byte[] data)
  {
      double d = CalculateMinEntropy(data);
-     return  Math.Round(d, 2, MidpointRounding.AwayFromZero) == 1; // Note 7
+     return  Math.Round(d, 2, MidpointRounding.AwayFromZero) >= 0.99; // Note 7
  }
  public static double CalculateMinEntropy(byte[] bytes)
  {
@@ -92,4 +92,4 @@ This ensures that the same seed/key will always produce the same output, which i
 5. No f(x) or any computer is capable of producing entropy, as such any seed entropy cannot be increased due to any key schedule expansion.
 6. Byte aligned padding reduces entropy and hence makes Min-Entropy calculations more restrictive, but it is required to ensure 256 byte outputs are always equal to 2048 bits. Without padding 5 becomes "101" instead of "00000101" and overall size would be reduced from actual 2048 bit array[] size.
 A 256 byte[] must always have 2049 bits. The net result of this decision is to ensure a safty margin for two nines min-entropy.
-7. Note provided Pass code is not two nines pass criteria as it will round down not up, its just a simple version to save code complexity, people can easly produce their own two nines rounding code. i.e. two nines pass requires 0.991 -> 1 not 0.99.
+7. The actual test is to round towards 1 and test equal to 1. This test provided Pass code is not two nines pass criteria as it will round down not up, its just a simple version to save code complexity, people can easly produce their own two nines rounding code. i.e. two nines pass requires 0.991 -> 1 not 0.99.
