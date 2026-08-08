@@ -1,0 +1,7 @@
+This funtion does not require any coding, but can be coded if autom,ation is required.
+
+Linek: https://functioninfosec.azurewebsites.net/api/Securekeys
+The result will be a minentropy CSNBRNG 256 bit perfect ( pre tested) key.
+The prime purpose is to use with legacy system like AES until migration to One Cipher and One Link ciphers.
+
+Note: Until the end of August 2026 this funtion requires no infastructure subscription to use.
