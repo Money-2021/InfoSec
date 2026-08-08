@@ -16,6 +16,8 @@ Steps
    userTokenPath = @"D:\Examples\" + node + @"\" + folder + "\\Token-" + sin + ".json";
    // Save Token
    d.SaveStore(userTokenPath);
+3. Request authorisation tokens for additional devices to access this compartment.
+https://github.com/Money-2021/InfoSec/blob/main/Devices
 
 3. Great new Visual Studio Net8.0 MSTest (Microsoft's built-in framework)
 4. Down laod the UnitTest cases as provided
