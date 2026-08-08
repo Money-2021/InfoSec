@@ -30,16 +30,15 @@
        HttpResponseMessage response = _httpClient.GetAsync(_uri).Result;
        if (response.IsSuccessStatusCode)
        {
-           // Async download via SAS Uri
-           string rsp = response.Content.ReadAsStringAsync().Result;
-           InfoSecSupport.VaultedResponse r = InfoSecSupport.VaultedResponse.Decode(rsp);
-           byte[] pData = r.GetUrlContent().Result;
-
-           // Device unprotect 
-           byte[] CBytes = fp.DeviceEcDhUnProtect(pData, r.Jwk);
-           string content = Encoding.UTF8.GetString(CBytes);
-           Assert.AreEqual("Test", content);
-
+                // Async download via SAS Uri
+                string rsp = response.Content.ReadAsStringAsync().Result;
+                InfoSecSupport.VaultedResponse r = InfoSecSupport.VaultedResponse.Decode(rsp);
+                string linkInfo = r.GetUrlContent().Result;
+            
+                // Device unprotect 
+                byte[] CBytes = fp.HostDeviceUnProtect(linkInfo);
+                string content = Encoding.UTF8.GetString(CBytes);
+                Assert.AreEqual("Test", content);
        }
        else
        {
