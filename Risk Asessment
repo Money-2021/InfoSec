@@ -12,6 +12,7 @@ b) in order to prevent this an out-of-channle 'Proof-ofTime; algorithm is used t
 This shared secret cannot be computed by any atatcker die to the Proof-of-time protocol.
 
 The Information Object is retieved via a SAS JwToken coupled with TLS protected downlaod and finally Medley One Cipher protected One Link negotiated protocol.
+The loss of access to a end device does not compromise retrieval of any stored information object.
 
 The search space for Medley vextors is greater than 2 ^ 2048 or 10 ^ 616..
 Cosmic Comparison:
