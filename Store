@@ -8,14 +8,12 @@ public void UseCase_store()
     string userTokenPath = @"D:\Examples\" + folder + "\\Token-" + sin + ".json";
     Fido.FidoProvider fp = new Fido.FidoProvider(userTokenPath);
 
-   
+    // Obtain Token 
     string infoSecToken = InfoSecSupport.VaultMe(userTokenPath);
    
-
     byte[] cnt = Encoding.UTF8.GetBytes("Test");
     string filename = "Test.txt";
-     string jwk = SqlServer.Providers.JwtProvider.ExtractJwk(infoSecToken);
-
+   
     InfoSecToken tkn = new InfoSecToken();
     tkn.Jti = Fido.EllipticCurves.CsPrng.RandomGuid();
     tkn.ObjectHash = new SHAKE256(64 * 8).ComputeHash(cnt);
@@ -37,6 +35,7 @@ public void UseCase_store()
     string _relativeUrl = "api/Store";
     Uri _uri = new Uri(_baseUri, _relativeUrl);
     _httpClient.BaseAddress = _baseUri;
+
     // Add User Jwtoken
     _httpClient.DefaultRequestHeaders.Add("x-token", fp.GetJwToken());
     HttpResponseMessage response = _httpClient.PostAsync(_uri, content).Result;
@@ -44,7 +43,8 @@ public void UseCase_store()
     {
         // Save objectId for file mapping 
         string objectId = response.Content.ReadAsStringAsync().Result;
-
+       // Sync on success
+       fp.IncrementCounter()
     }
     else
     {
