@@ -42,6 +42,7 @@ public void infoSec_devices_list()
 
 }
 // Request new Device Authorisation
+Note a User Token can only add device tokens, please obtain additional UserTokens from your domain operator.
  [TestMethod]
  public void infoSec_devices_add()
  {
