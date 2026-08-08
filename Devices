@@ -83,3 +83,5 @@ public void infoSec_devices_list()
      }
 
  }
+
+// REmove Device from Compartment
