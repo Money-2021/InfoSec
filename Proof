@@ -86,7 +86,11 @@ One cannot compute an algorithm to generate a 'key stream' as the result would b
 3. All Vaulted Objects shall be end-to-end Once Cipher (device to device) secured before the applaiction of device to host and host One Cipher wrapped.
 
 Conclusion 
-The Medley (ITS-KMS) creates a pairwise, potentially infinate length, identical secure bit stream (all bits of the key have equal propablity) between two secure Identites (end point devices) according to this proof.
+The Medley (ITS-KMS) creates a pairwise, potentially infinate length, identical secure (verified) bit stream (all bits of the key have equal propablity) between two secure Identites (end point devices) according to this proof.
+
+References
+E. Shannon, "Communication theory of secrecy systems," in The Bell System Technical Journal, vol. 28, no. 4, pp. 656-715, Oct. 1949.
+E. Shannon, "A mathematical theory of communication," in The Bell System Technical Journal, vol. 27, no. 3, pp. 379-423, July 1948.
 
 Notes
 1. Medly is a pair-wise, cooperative key generation scheme, the Key Generation Cipher is provably (above) immune from all forms of attack vectors, as the CSNRBG keys are verifable crypyographically secure. 
