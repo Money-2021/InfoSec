@@ -7,8 +7,11 @@ b). P(C = cIM = mo) = P(C = cIM = mt ) i.e. the probability of ciphertext c is e
 c). The key is as long as the message and a key should be used uniquely with a probability 1/IKI where IKI is the key space. 
 Pr[M=m;C=c]=Pr[M=m] 
 
-Claude Shannon proved that achieving information-theoretic perfect secrecy demands that every key bit is chosen uniformly at random, meaning the min-entropy per bit is maximal.
-The Medley Key Generator can be self or indpendly verified (using the supplied source code) to produce shannon min-entropy greater than 0.99 bits per symbol.
+But a bit stream with maximum Shannon entropy (ergo maximum information content) is nature derived random noise. It contains the maximum possible “information content” in terms of bits needed to represent it, it is computationally incompressible, 
+it also has no meaningful or useful information in the conventional sense. 
+
+Claude Shannon proved that achieving information-theoretic perfect secrecy demands that every key bit of a secure bit stream is chosen uniformly at random, meaning the min-entropy per bit is maximal.
+The Medley Key Generator is  be self or indpendly verified (using the supplied source code) to produce shannon min-entropy greater than 0.99 bits per symbol (typically 1.0 bits per symbol).
 
 Proving:
 . The knowledge of the Cyphertext is not helpful at all!
