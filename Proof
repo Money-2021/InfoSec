@@ -31,8 +31,8 @@ The following code is provided to allow a binary self-validation of any claimed 
 
  public static double CalculateMinEntropy(byte[] bytes)
  {
-     // For human visualisation. Convert each byte to a base-2 string, with byte aligned padding.
-     // This computes a max value of 1 for binary systems. Note 6
+     // Convert each byte to a base-2 string, with byte aligned padding. Note 6
+     // This computes a max value of 1 for binary systems. 
      string s = string.Concat(bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
      int len = s.Length;
      double maxP = s.GroupBy(c => c).Max(g => (double)g.Count() / len);
