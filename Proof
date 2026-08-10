@@ -8,6 +8,7 @@ c). The key is as long as the message and a key should be used uniquely with a p
 Pr[M=m;C=c]=Pr[M=m] 
 
 Claude Shannon proved that achieving information-theoretic perfect secrecy demands that every key bit is chosen uniformly at random, meaning the min-entropy per bit is maximal.
+The Medley Key Generator can be slf verified to produce shannon min-entropy greater than 0.99 bits per symbol.
 
 Proving:
 . The knowledge of the Cyphertext is not helpful at all!
