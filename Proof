@@ -26,18 +26,18 @@ No cipher can be generically considered secure unless each and every cipher outp
 
 The following code is provided to allow a binary self-validation of any claimed proof of security against any cipher output data stream.
 
- public static bool Pass(byte[] data)
- {
-     double d = CalculateMinEntropy(data);
-     return  Math.Round(d, 2, MidpointRounding.AwayFromZero) >= 0.99; // Note 7
- }
  public static double CalculateMinEntropy(byte[] bytes)
  {
-     // Converts each byte to a base-2 string, with byte aligned padding. 
+     // For human visualisation. Convert each byte to a base-2 string, with byte aligned padding. // Note 6
      string s = string.Concat(bytes.Select(b => Convert.ToString(b, 2).PadLeft(8, '0')));
      int len = s.Length;
      double maxP = s.GroupBy(c => c).Max(g => (double)g.Count() / len);
      return -Math.Log2(maxP);
+ }
+ public static bool Pass(byte[] data)
+ {
+     double d = CalculateMinEntropy(data);
+     return  Math.Round(d, 2, MidpointRounding.AwayFromZero) >= 0.99; // Note 7
  }
 
 If any cipher claims to be secure, the tested output using the above funtion, shall be greater than 0.99 bits per symbol to be considered secure.
