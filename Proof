@@ -7,6 +7,8 @@ b). P(C = cIM = mo) = P(C = cIM = mt ) i.e. the probability of ciphertext c is e
 c). The key is as long as the message and a key should be used uniquely with a probability 1/IKI where IKI is the key space. 
 Pr[M=m;C=c]=Pr[M=m] 
 
+Claude Shannon proved that achieving information-theoretic perfect secrecy demands that every key bit is chosen uniformly at random, meaning the min-entropy per bit is maximal.
+
 Proving:
 . The knowledge of the Cyphertext is not helpful at all!
 . The result is independent of the capability of any attacker or computational resources.
