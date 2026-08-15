@@ -50,6 +50,7 @@ public static double CalculateMinEntropy(byte[] data)
     // Calculate min-entropy: Return -Math.Log2 of that probability ratio
     return -Math.Log2(pMax);
 }
++The result should be between 6 and 8 for any cipher.
 
 If any cipher claims to be secure, the tested output using the above funtion, shall be greater than 0.99 bits per symbol to be considered secure.
 Scores under 0.99 reveal hidden patterns, biases, or repeating sequences that algorithms or bad actors can exploit, a value of 0.83 to 0.96 shows how week AES key schedules are today.
