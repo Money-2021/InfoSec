@@ -47,7 +47,7 @@ public static double CalculateMinEntropy(byte[] data)
     // Find highest count: Loop through the tallies to extract the maximum single count(pMax).
     // Compute ratio: Divide pMax by the total number of bytes in the input collection (data.Length).
     double pMax = (double)maxCount / data.Length;
-    // Calculate entropy: Return -Math.Log2 of that probability ratio
+    // Calculate min-entropy: Return -Math.Log2 of that probability ratio
     return -Math.Log2(pMax);
 }
 
