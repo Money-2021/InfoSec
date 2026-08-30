@@ -7,7 +7,8 @@ b). P(C = cIM = mo) = P(C = cIM = mt ) i.e. the probability of ciphertext c is e
 c). The key is as long as the message and a key should be used uniquely with a probability 1/IKI where IKI is the key space. 
 Pr[M=m;C=c]=Pr[M=m] 
 
-'The only mathematically unbreakable encryption scheme requires a key that is the exact same length as the message, used only once, and sampled from a perfectly uniform distribution. Such as the Medley One Cipher.'
+In Conclusion
+The only mathematically unbreakable encryption scheme requires a key that is the exact same length as the message, used only once, and sampled from a perfectly uniform distribution. Such as the Medley One Cipher.
 
 A bit stream with maximum Shannon entropy (ergo maximum information content) is nature agreagted random noise. It contains the maximum possible “information content” in terms of bits needed to represent it, it is computationally incompressible, 
 it also has no meaningful or useful information in the conventional sense. 
