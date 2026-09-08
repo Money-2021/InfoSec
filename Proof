@@ -71,6 +71,12 @@ public static (double ShannonEntropy, double MinEntropy) Calculate(byte[] data)
 
     return (shannonEntropy, minEntropy);
 }
+// Test vectors, for range limits.
+// Entropy = 8
+byte[] allValues = Enumerable.Range(0, 256).Select(i => (byte)i).ToArray();
+// Entropy = 0
+byte[] zeroValues = new byte[size]
+
 
 Test for Birthday atatck or collisions:
  public static int CalcCollisions(byte[] data)
