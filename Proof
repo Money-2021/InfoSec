@@ -88,6 +88,20 @@ Test for Birthday atatck or collisions:
      return collisions.Count();
  }
 
+Example Results
+ Range  Tests
+ Test Zero Entropy Bytes : Shannon-entropy 0.0000 min-entropy 0.0000
+ Test Maxium Entropy Bytes : Shannon-entropy 8.0000 min-entropy 8.0000
+
+ Entropy Tests
+ Medley One Cipher Bytes : Shannon-entropy 5.0000 min-entropy 5.0000
+ AESGCM CipherText Bytes : Shannon-entropy 4.8125 min-entropy 4.0000
+ Latice Ring-LWE CipherText Bytes : Shannon-entropy 4.9375 min-entropy 4.0000
+
+  Collision Tests
+  AESGCM Collisions 3.0000
+  Medley One Cipher Collisions 0.0000
+
 If any cipher claims to be secure, the tested output using the above funtion, shall be greater than 0.99 bits per symbol to be considered secure.
 Scores under 0.99 reveal hidden patterns, biases, or repeating sequences that algorithms or bad actors can exploit, a value of 0.83 to 0.96 shows how week AES key schedules are today.
 
