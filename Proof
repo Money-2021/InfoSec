@@ -36,28 +36,41 @@ No cipher can be generically considered secure unless each and every cipher outp
 
 The following code is provided to allow a binary self-validation of any claimed proof of security against any cipher output data stream.
 
-public static double CalculateMinEntropy(byte[] data) Note 6.
+public static (double ShannonEntropy, double MinEntropy) Calculate(byte[] data)
 {
-    if (data == null || data.Length == 0) return 0.0;
-   
-    // Count frequencies: Tally occurrences for all 256 possible byte values using an integer array.
-    var frequencies = new int[256];
-    int maxCount = 0;
+    if (data == null || data.Length == 0)
+        return (0.0, 0.0);
+
+    // Step 1: Count occurrences of each byte value (0-255)
+    int[] counts = new int[256];
     foreach (byte b in data)
     {
-        frequencies[b]++;
-        if (frequencies[b] > maxCount)
+        counts[b]++;
+    }
+    // Step 2: Sum the Shannon entropy components
+    double shannonEntropy = 0.0;
+    int maxCount = 0;
+    double len = data.Length;
+
+    foreach (int count in counts)
+    {
+        if (count > 0)
         {
-            maxCount = frequencies[b];
+            if (count > maxCount) maxCount = count;
+
+            // Calculate probability of the byte occurring
+            double p = count / len;
+
+            // Shannon entropy summation: -p * log2(p)
+            shannonEntropy -= p * Math.Log2(p);
         }
     }
-    // Find highest count: Loop through the tallies to extract the maximum single count(pMax).
-    // Compute ratio: Divide pMax by the total number of bytes in the input collection (data.Length).
-    double pMax = (double)maxCount / data.Length;
-    // Calculate min-entropy: Return -Math.Log2 of that probability ratio
-    return -Math.Log2(pMax);
+    // Calulate min-entropy: -log2(p_max)
+    double pMax = (double)maxCount / len;
+    double minEntropy = -Math.Log2(pMax); 
+
+    return (shannonEntropy, minEntropy);
 }
-+The result should be between 6 and 8 for any cipher.
 
 Test for Birthday atatck or collisions:
  public static int CalcCollisions(byte[] data)
