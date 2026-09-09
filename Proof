@@ -88,6 +88,12 @@ Test for Birthday atatck or collisions:
      return collisions.Count();
  }
 
+AI Versions
+1. Prompt: "calculate Shannon entropy and min entropy in bits per 8 bits for this hex encoded byte array 2C9D8EFC726469F6974DF4EC05C9292360CDE3C66F5510175BF7C13E532481A8 
+2. Prompt: “verify maximum number of collisions is zero for this hex encoded byte array 2C9D8EFC726469F6974DF4EC05C9292360CDE3C66F5510175BF7C13E532481A8 
+3. To test any TRNG/QRND, classic AES/BATTON or PQC use prompt: calculate Shannon min entropy in bits per 8 bits for this hex encoded byte array <add hex encoded output stream>
+
+
 Example Results
  Range  Tests
  Test Zero Entropy Bytes : Shannon-entropy 0.0000 min-entropy 0.0000
