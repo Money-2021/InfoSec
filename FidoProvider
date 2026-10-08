@@ -1,5 +1,5 @@
 The default Native AOT deployment
-Windows 11, Net8.0, X64 FidoProvider is provided for useage with all included unit test cases is provided here:
+Windows 11, Net8.0, X64 FidoProvider is provided for usage with all included unit test cases is provided here:
 
 Console apps must add reference to System.Security.Cryptography.ProtectedData
 
