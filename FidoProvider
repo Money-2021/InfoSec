@@ -1,3 +1,8 @@
+
+The Fido provider is entirely optional and comes with no warrenty.
+If self developed, the initial One Link protocol should be set to None. and the Public Domain One Cipher Used with a ulong counter value as poer use cases.
+
+When the optional Fido Library is used:
 The default Native AOT deployment
 Windows 11, Net8.0, X64 FidoProvider is provided for useage with all included unit test cases is provided here:
 
