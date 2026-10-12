@@ -1,4 +1,5 @@
 All users who access the high-assurance libary, must accprt and be bound by the following mandatory licence in order to use the lirary to become a subscriber to the InfoSec platofrem.
+The high-assuranc elibaray is optional as a devloper can use the Developer Guid to develope their own Fido library to access the  the InfoSec platofrem over existing TLS sChannles.
 Should the subscriber not willingly be bound by these condition, they MUST not seek to subscribe to the InfoSec service or execute any funtion calls inside the binary file.
 
 Subscriber agrees that the Fido.dll  contain valuable confidential and proprietry information.
