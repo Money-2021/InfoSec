@@ -41,10 +41,14 @@ public void UseCase_store()
     HttpResponseMessage response = _httpClient.PostAsync(_uri, content).Result;
     if (response.IsSuccessStatusCode)
     {
-        // Save objectId for file mapping 
-        string objectId = response.Content.ReadAsStringAsync().Result;
-       // Sync on success
-       fp.IncrementCounter()
+        // Sync
+       fp.IncrementCounter();
+     
+       // Save objectId for file mapping 
+       string objectId = response.Content.ReadAsStringAsync().Result;
+       // 3. Clean up any quotes added by JSON serialization and parse
+       var cleanGuidString = objectId.Replace("\"", "");
+       Guid objId =  Guid.Parse(cleanGuidString);
     }
     else
     {
